@@ -4,12 +4,17 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import TerminalWindow from "./TerminalWindow";
 import TerminalBackground from "./TerminalBackground";
+import shopeasyImg from "../assets/shopeasy.png";
+import micromediaImg from "../assets/micromedia.png";
+import nextjsauthImg from "../assets/nextjsauth.png";
+import vidtubeImg from "../assets/vidtube.png";
+import zeptoImg from "../assets/zepto.png";
 
 const projectData = {
   1: {
     title: "ShopEasy",
     category: "Full Stack E-Commerce",
-    image: "/src/assets/shopeasy.png",
+    image: shopeasyImg,
     description: "A B2C e-commerce platform with role-based access control (RBAC) and Redux Toolkit for frontend state management, achieving a lag-free checkout flow.",
     techStack: ["React", "Node.js", "MongoDB", "Express", "Redux Toolkit", "PayPal API"],
     features: ["Role-Based Access Control (RBAC)", "PayPal Payment Integration", "Redux Toolkit State Management", "MongoDB Aggregation Pipelines", "99.9% Payment Success Rate"],
@@ -19,7 +24,7 @@ const projectData = {
   2: {
     title: "MicroMedia",
     category: "Backend Microservices",
-    image: "/src/assets/micromedia.png",
+    image: micromediaImg,
     description: "A distributed social networking backend with Microservices architecture, containerized using Docker and structured for CI/CD deployment pipelines.",
     techStack: ["Node.js", "RabbitMQ", "Redis", "Docker"],
     features: ["Async Message Broker (RabbitMQ)", "Redis Caching (~40% latency reduction)", "Docker Containerization", "Durable Queues & Consumer Acks", "CI/CD Ready"],
@@ -29,7 +34,7 @@ const projectData = {
   3: {
     title: "NextJsAuth",
     category: "Authentication System",
-    image: "/src/assets/nextjsauth.png",
+    image: nextjsauthImg,
     description: "A production-ready authentication system using Next.js App Router with bcrypt password hashing and stateless JWT tokens, eliminating server-side session overhead.",
     techStack: ["Next.js 14", "TypeScript", "JWT", "Nodemailer", "bcrypt"],
     features: ["JWT Stateless Auth", "bcrypt Password Hashing", "Email Verification via Nodemailer", "Password Reset Flow", "60% Activation Rate Increase"],
@@ -39,7 +44,7 @@ const projectData = {
   4: {
     title: "VidTube Backend",
     category: "Video Streaming Backend",
-    image: "/src/assets/vidtube.png",
+    image: vidtubeImg,
     description: "A robust and scalable backend infrastructure for a video hosting platform similar to YouTube. Handles video uploads, processing, and streaming.",
     techStack: ["Node.js", "Express.js", "MongoDB", "Mongoose", "Cloudinary", "Multer"],
     features: ["Video Upload & Processing", "JWT Authentication", "Like/Dislike System", "Comment Threads", "View Counting"],
@@ -49,7 +54,7 @@ const projectData = {
   5: {
     title: "Quick Comm (Zepto Clone)",
     category: "Q-Commerce Frontend",
-    image: "/src/assets/zepto.png",
+    image: zeptoImg,
     description: "A high-performance, pixel-perfect clone of the Zepto quick-commerce application frontend.",
     techStack: ["React.js", "Redux Toolkit", "Tailwind CSS", "React Router"],
     features: ["Product Catalogue", "Real-time Search", "Cart Management", "Responsive UI", "Category Filtering"],
