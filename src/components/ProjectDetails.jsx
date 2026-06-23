@@ -2,37 +2,39 @@ import React, { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
+import TerminalWindow from "./TerminalWindow";
+import TerminalBackground from "./TerminalBackground";
 
 const projectData = {
   1: {
     title: "ShopEasy",
     category: "Full Stack E-Commerce",
     image: "/src/assets/shopeasy.png",
-    description: "A comprehensive e-commerce platform with improved user experience.",
-    techStack: ["React", "Node.js", "MongoDB", "Express"],
-    features: ["User Authentication", "Product Search", "Cart Management", "Order Processing"],
+    description: "A B2C e-commerce platform with role-based access control (RBAC) and Redux Toolkit for frontend state management, achieving a lag-free checkout flow.",
+    techStack: ["React", "Node.js", "MongoDB", "Express", "Redux Toolkit", "PayPal API"],
+    features: ["Role-Based Access Control (RBAC)", "PayPal Payment Integration", "Redux Toolkit State Management", "MongoDB Aggregation Pipelines", "99.9% Payment Success Rate"],
     githubLink: "https://github.com/chmp0940/ShopEasy",
-    liveLink: "https://shopeasy-1-u9f1.onrender.com"
+    liveLink: "https://shopeasy-1-u9f1.onrender.com",
   },
   2: {
     title: "MicroMedia",
     category: "Backend Microservices",
     image: "/src/assets/micromedia.png",
-    description: "A scalable backend architecture using microservices.",
-    techStack: ["Go", "gRPC", "Docker", "Kubernetes"],
-    features: ["Service Discovery", "Load Balancing", "Inter-service Communication", "Distributed Tracing"],
+    description: "A distributed social networking backend with Microservices architecture, containerized using Docker and structured for CI/CD deployment pipelines.",
+    techStack: ["Node.js", "RabbitMQ", "Redis", "Docker"],
+    features: ["Async Message Broker (RabbitMQ)", "Redis Caching (~40% latency reduction)", "Docker Containerization", "Durable Queues & Consumer Acks", "CI/CD Ready"],
     githubLink: "https://github.com/chmp0940/Social_Media_MicroServices",
-    liveLink: "https://github.com/chmp0940/Social_Media_MicroServices"
+    liveLink: "",
   },
   3: {
     title: "NextJsAuth",
     category: "Authentication System",
-    image: "/src/assets/nextjsauth.png", 
-    description: "Secure and robust authentication system built with Next.js.",
-    techStack: ["Next.js", "NextAuth.js", "TypeScript", "Prisma"],
-    features: ["OAuth Providers", "Email/Password Login", "Session Management", "Protected Routes"],
+    image: "/src/assets/nextjsauth.png",
+    description: "A production-ready authentication system using Next.js App Router with bcrypt password hashing and stateless JWT tokens, eliminating server-side session overhead.",
+    techStack: ["Next.js 14", "TypeScript", "JWT", "Nodemailer", "bcrypt"],
+    features: ["JWT Stateless Auth", "bcrypt Password Hashing", "Email Verification via Nodemailer", "Password Reset Flow", "60% Activation Rate Increase"],
     githubLink: "https://github.com/chmp0940/NextJsAuth",
-    liveLink: "https://next-js-auth-c54u-hzst43akz-mukund-mahakalkars-projects.vercel.app/"
+    liveLink: "https://next-js-auth-c54u-hzst43akz-mukund-mahakalkars-projects.vercel.app/",
   },
   4: {
     title: "VidTube Backend",
@@ -42,7 +44,7 @@ const projectData = {
     techStack: ["Node.js", "Express.js", "MongoDB", "Mongoose", "Cloudinary", "Multer"],
     features: ["Video Upload & Processing", "JWT Authentication", "Like/Dislike System", "Comment Threads", "View Counting"],
     githubLink: "https://github.com/chmp0940/VidTube---Backend-Project",
-    liveLink: "" 
+    liveLink: "",
   },
   5: {
     title: "Quick Comm (Zepto Clone)",
@@ -52,8 +54,8 @@ const projectData = {
     techStack: ["React.js", "Redux Toolkit", "Tailwind CSS", "React Router"],
     features: ["Product Catalogue", "Real-time Search", "Cart Management", "Responsive UI", "Category Filtering"],
     githubLink: "https://github.com/chmp0940/Quick_comm_Zepto-React-",
-    liveLink: "https://quick-comm-zepto-react-r9aj-32x97qxfe.vercel.app/"
-  }
+    liveLink: "https://quick-comm-zepto-react-r9aj-32x97qxfe.vercel.app/",
+  },
 };
 
 const ProjectDetails = () => {
@@ -67,14 +69,15 @@ const ProjectDetails = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#030014] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-terminal-bg text-terminal-text-primary font-mono">
         <div className="text-center">
+          <div className="text-terminal-red text-sm mb-2">Error 404</div>
           <h2 className="text-2xl font-bold mb-4">Project Not Found</h2>
-          <button 
+          <button
             onClick={() => navigate("/")}
-            className="px-6 py-2 bg-purple-600 rounded-full hover:bg-purple-700 transition"
+            className="terminal-btn-primary"
           >
-            Go Home
+            <span className="text-terminal-cyan mr-1">❯</span> cd /home
           </button>
         </div>
       </div>
@@ -82,78 +85,110 @@ const ProjectDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#030014] text-white relative overflow-hidden">
-      {/* Background Elements */}
+    <div className="min-h-screen bg-terminal-bg text-terminal-text-primary font-mono relative overflow-hidden">
+      <TerminalBackground />
+
+      {/* Ambient glows */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-terminal-green/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-terminal-cyan/5 rounded-full blur-[120px]" />
       </div>
 
       <div className="container mx-auto px-6 py-12 relative z-10">
-        <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-12">
-          <ArrowLeft className="w-5 h-5" /> Back to Projects
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-slate-300 hover:text-terminal-green transition-colors mb-12 text-sm"
+        >
+          <ArrowLeft className="w-4 h-4" /> cd ../projects
         </Link>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative"
+            transition={{ duration: 0.5 }}
           >
-            <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
-              <img src={project.image} alt={project.title} className="w-full object-cover" />
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
-            </div>
+            <TerminalWindow title={`~/${project.title.toLowerCase().replace(/\s+/g, "-")}/preview`}>
+              <div className="rounded-md overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full object-cover"
+                />
+              </div>
+            </TerminalWindow>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
+          {/* Details */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <div className="glass-card px-4 py-1 rounded-full text-xs font-bold text-purple-400 mb-4 w-fit border border-purple-500/20">
-              {project.category}
-            </div>
-            <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-              {project.title}
-            </h1>
-            <p className="text-gray-300 text-lg leading-relaxed mb-8">
-              {project.description}
-            </p>
+            <TerminalWindow title="README.md">
+              <div className="space-y-6">
+                <div>
+                  <div className="terminal-tag mb-3">{project.category}</div>
+                  <h1 className="text-3xl md:text-4xl font-bold font-sans text-terminal-text-primary mb-3">
+                    {project.title}
+                  </h1>
+                  <p className="text-slate-300 text-sm leading-relaxed">
+                    <span className="text-slate-400">{">"} </span>
+                    {project.description}
+                  </p>
+                </div>
 
-            <div className="mb-8">
-               <h3 className="text-xl font-semibold mb-4 text-white">Tech Stack</h3>
-               <div className="flex flex-wrap gap-3">
-                 {project.techStack.map((tech) => (
-                   <span key={tech} className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300 hover:bg-white/10 transition-colors">
-                     {tech}
-                   </span>
-                 ))}
-               </div>
-            </div>
+                <div>
+                  <h3 className="text-terminal-cyan text-xs font-mono mb-3">
+                    {"// tech_stack"}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                      <span key={tech} className="terminal-tag">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
 
-            <div className="mb-10">
-               <h3 className="text-xl font-semibold mb-4 text-white">Key Features</h3>
-               <ul className="list-disc list-inside space-y-2 text-gray-300">
-                 {project.features.map((feature) => (
-                   <li key={feature}>{feature}</li>
-                 ))}
-               </ul>
-            </div>
+                <div>
+                  <h3 className="text-terminal-cyan text-xs font-mono mb-3">
+                    {"// features"}
+                  </h3>
+                  <ul className="space-y-1.5">
+                    {project.features.map((feature) => (
+                      <li key={feature} className="text-slate-300 text-sm flex items-center gap-2">
+                        <span className="text-terminal-green">✓</span> {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-            <div className="flex gap-6">
-              {project.githubLink && (
-                  <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-colors">
-                    <Github className="w-5 h-5" /> View Code
-                  </a>
-              )}
-              {project.liveLink && project.liveLink !== "#" && (
-                  <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 text-white font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm border border-white/10">
-                    <ExternalLink className="w-5 h-5" /> Live Demo
-                  </a>
-              )}
-            </div>
+                <div className="flex gap-4 pt-2">
+                  {project.githubLink && (
+                    <a
+                      href={project.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="terminal-btn-primary flex items-center gap-2 text-sm"
+                    >
+                      <Github className="w-4 h-4" /> View Code
+                    </a>
+                  )}
+                  {project.liveLink && project.liveLink !== "#" && (
+                    <a
+                      href={project.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="terminal-btn flex items-center gap-2 text-sm border-terminal-cyan/30 text-terminal-cyan hover:bg-terminal-cyan/10"
+                    >
+                      <ExternalLink className="w-4 h-4" /> Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </TerminalWindow>
           </motion.div>
         </div>
       </div>

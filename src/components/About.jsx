@@ -1,146 +1,191 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Code, Cpu, Globe, Zap, Coffee, Heart, Music, GraduationCap } from "lucide-react";
-
-const BentoCard = ({ children, className = "", delay = 0 }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay }}
-    viewport={{ once: true }}
-    whileHover={{ scale: 1.02, rotate: 1 }}
-    className={`glass-card p-6 flex flex-col justify-between group overflow-hidden relative ${className}`}
-  >
-    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    {children}
-  </motion.div>
-);
+import TerminalWindow from "./TerminalWindow";
 
 const About = () => {
   return (
     <section id="about" className="py-24 px-6 relative">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <motion.h2 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="text-5xl font-bold mb-6"
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <div className="section-comment">About Me</div>
+          <h2 className="text-4xl md:text-5xl font-bold font-sans">
+            About <span className="glow-green">Me</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 auto-rows-[180px]">
+          {/* Main Bio — 2x2 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="md:col-span-2 md:row-span-2"
           >
-            About <span className="text-gradient">Me</span>
-          </motion.h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[180px]">
-          
-          {/* Main Bio - Large Square (2x2) */}
-          <BentoCard className="md:col-span-2 md:row-span-2">
-             <div className="h-full flex flex-col justify-center space-y-6 relative z-10">
-                <div className="bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mb-2">
-                   <UserIcon />
+            <TerminalWindow title="about.md" className="h-full">
+              <div className="h-full flex flex-col justify-center space-y-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-md bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center">
+                    <Code className="w-5 h-5 text-terminal-green" />
+                  </div>
+                  <h3 className="text-2xl font-bold font-sans text-terminal-text-primary">
+                    Pixels to Logic
+                  </h3>
                 </div>
-                <h3 className="text-3xl font-bold text-white">Pixels to Logic</h3>
-                <p className="text-gray-300 leading-relaxed text-lg">
-                  I'm a Full Stack Developer bridging creativity and engineering. I specialize in building scalable MERN applications and high-performance backend systems using Microservices architecture.
+                <p className="text-slate-300 leading-relaxed text-sm">
+                  <span className="text-slate-400">{">"} </span>
+                  I'm a Full Stack Developer with internship experience at QuickIntell. 
+                  I specialize in building scalable applications with React, Next.js, 
+                  TypeScript, and deploying backend systems with AWS, Docker & PostgreSQL.
                 </p>
-                <div className="pt-4 flex flex-wrap gap-2">
-                   {["React", "Node.js", "Express", "MongoDB", "Redux", "Docker"].map(tag => (
-                      <span key={tag} className="px-4 py-2 rounded-full bg-white/5 text-sm border border-white/10 hover:bg-white/20 transition-colors">{tag}</span>
-                   ))}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {["React", "TypeScript", "Next.js", "Node.js", "AWS", "Docker", "PostgreSQL"].map((tag) => (
+                    <span
+                      key={tag}
+                      className="terminal-tag"
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
-             </div>
-          </BentoCard>
+              </div>
+            </TerminalWindow>
+          </motion.div>
 
-          {/* Projects (1x2) */}
-          <BentoCard delay={0.1} className="md:row-span-2 bg-gradient-to-br from-purple-500/20 to-blue-500/20">
-             <div className="flex flex-col items-center justify-center text-center h-full gap-4 relative z-10">
-                <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center animate-pulse">
-                   <Zap className="w-10 h-10 text-yellow-300" />
+          {/* Projects Count — 1x2 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="md:row-span-2"
+          >
+            <TerminalWindow title="stats.sh" className="h-full">
+              <div className="flex flex-col items-center justify-center text-center h-full gap-3">
+                <div className="w-14 h-14 rounded-md bg-terminal-amber/10 border border-terminal-amber/20 flex items-center justify-center">
+                  <Zap className="w-7 h-7 text-terminal-amber" />
                 </div>
                 <div>
-                   <span className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500">8+</span>
-                   <p className="text-lg font-bold mt-2">Projects</p>
+                  <span className="text-5xl font-black glow-amber font-sans">8+</span>
+                  <p className="text-sm font-bold mt-2 text-terminal-text-primary">Projects</p>
                 </div>
-                <p className="text-sm font-medium opacity-80 max-w-[150px]">
-                   Built diverse web apps ranging from E-commerce to Social Media
+                <p className="text-xs text-slate-300 max-w-[150px]">
+                  From E-commerce to Microservices to Auth Systems
                 </p>
-             </div>
-          </BentoCard>
+              </div>
+            </TerminalWindow>
+          </motion.div>
 
-          {/* Tech Stack Focus (1x2) */}
-          <BentoCard className="md:row-span-2" delay={0.2}>
-              <div className="flex flex-col items-center justify-center h-full text-center gap-6 relative z-10">
-                  <div className="w-20 h-20 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                      <Cpu className="w-10 h-10 text-cyan-400" />
+          {/* Specialization — 1x2 */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="md:row-span-2"
+          >
+            <TerminalWindow title="stack.config" className="h-full">
+              <div className="flex flex-col items-center justify-center h-full text-center gap-4">
+                <div className="w-14 h-14 rounded-md bg-terminal-cyan/10 border border-terminal-cyan/20 flex items-center justify-center">
+                  <Cpu className="w-7 h-7 text-terminal-cyan" />
+                </div>
+                <div className="space-y-1">
+                  <div className="text-xs uppercase tracking-widest text-terminal-cyan font-mono">
+                    Specialization
                   </div>
-                  <div className="space-y-2">
-                      <div className="text-xs uppercase tracking-widest text-cyan-400">Specialization</div>
-                      <div className="font-extrabold text-2xl leading-tight">
-                        Microservices <br/> & Backend
+                  <div className="font-bold text-xl text-terminal-text-primary font-sans leading-tight">
+                    Microservices<br />& Backend
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-center gap-1.5">
+                  {["RabbitMQ", "Redis", "Docker"].map((t) => (
+                    <span key={t} className="text-xs px-2 py-0.5 bg-terminal-cyan/10 rounded border border-terminal-cyan/20 text-terminal-cyan">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </TerminalWindow>
+          </motion.div>
+
+          {/* Education — Bottom Left */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="md:col-span-2"
+          >
+            <TerminalWindow title="education.txt" className="h-full">
+              <div className="flex flex-col justify-center h-full space-y-3">
+                <div className="flex items-center gap-3">
+                  <GraduationCap className="w-5 h-5 text-terminal-pink" />
+                  <h4 className="text-lg font-bold font-sans text-terminal-text-primary">Education</h4>
+                </div>
+                <div>
+                  <p className="text-terminal-green text-sm font-semibold">
+                    Indian Institute of Information Technology, Bhopal
+                  </p>
+                  <div className="flex justify-between items-end mt-2">
+                    <div>
+                      <p className="text-slate-300 text-sm">B.Tech in Computer Science (Final Year)</p>
+                      <p className="text-slate-400 text-xs">2023 – 2027</p>
+                    </div>
+                    <div className="terminal-tag">
+                      CGPA: 8.62
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TerminalWindow>
+          </motion.div>
+
+          {/* Hobbies — Bottom Right */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.35 }}
+            className="md:col-span-2"
+          >
+            <TerminalWindow title="hobbies.json" className="h-full">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 h-full px-2">
+                <div className="space-y-1 text-center md:text-left">
+                  <h4 className="text-lg font-bold font-sans text-terminal-text-primary">
+                    Beyond the Code
+                  </h4>
+                  <p className="text-slate-300 text-xs">
+                    Exploration fuels my creativity.
+                  </p>
+                </div>
+                <div className="flex gap-6">
+                  {[
+                    { icon: Music, label: "Music" },
+                    { icon: Coffee, label: "Coffee" },
+                    { icon: Heart, label: "Design" },
+                    { icon: Globe, label: "Travel" },
+                  ].map(({ icon: Icon, label }) => (
+                    <div key={label} className="flex flex-col items-center gap-1 group">
+                      <div className="p-2.5 bg-terminal-card border border-terminal-border rounded-md group-hover:border-terminal-green/30 group-hover:bg-terminal-green/5 transition-all">
+                        <Icon className="w-4 h-4 text-slate-300 group-hover:text-terminal-green transition-colors" />
                       </div>
-                  </div>
-                  <div className="flex flex-wrap justify-center gap-2">
-                     <span className="text-xs px-2 py-1 bg-cyan-500/10 rounded-md text-cyan-300">RabbitMQ</span>
-                     <span className="text-xs px-2 py-1 bg-cyan-500/10 rounded-md text-cyan-300">Redis</span>
-                     <span className="text-xs px-2 py-1 bg-cyan-500/10 rounded-md text-cyan-300">Docker</span>
-                  </div>
-              </div>
-          </BentoCard>
-
-          {/* Education - Wide (Bottom Left) */}
-          <BentoCard className="md:col-span-2" delay={0.3}>
-            <div className="flex flex-col justify-center h-full space-y-4 relative z-10">
-              <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                <GraduationCap className="w-6 h-6 text-pink-400" />
-              </div>
-              <div>
-                <h4 className="text-2xl font-bold">Education</h4>
-                <p className="text-purple-300 font-semibold mt-1">Indian Institute of Information Technology, Bhopal</p>
-              </div>
-              <div className="flex justify-between items-end">
-                <div>
-                   <p className="text-gray-300">B.Tech in Computer Science</p>
-                   <p className="text-gray-500 text-sm">2023 - 2027</p>
-                </div>
-                <div className="bg-white/5 px-3 py-1 rounded-lg border border-white/10">
-                   <span className="text-sm font-bold text-gradient">CGPA: 8.49</span>
+                      <span className="text-[10px] text-slate-300">{label}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-          </BentoCard>
-
-          {/* Hobbies - Wide (Bottom Right) */}
-          <BentoCard className="md:col-span-2" delay={0.35}>
-             <div className="flex flex-col md:flex-row items-center justify-between gap-6 h-full px-8 relative z-10">
-                <div className="space-y-2 text-center md:text-left">
-                   <h4 className="text-2xl font-bold">Beyond the Code</h4>
-                   <p className="text-gray-400">Exploration fuels my creativity.</p>
-                </div>
-                <div className="flex gap-8">
-                   <HobbyIcon icon={Music} label="Music" />
-                   <HobbyIcon icon={Coffee} label="Coffee" />
-                   <HobbyIcon icon={Heart} label="Design" />
-                   <HobbyIcon icon={Globe} label="Travel" />
-                </div>
-             </div>
-          </BentoCard>
-
+            </TerminalWindow>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 };
-
-const UserIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-)
-
-const HobbyIcon = ({ icon: Icon, label }) => (
-    <div className="flex flex-col items-center gap-1 group">
-        <div className="p-3 bg-white/5 rounded-full group-hover:bg-white/10 transition-colors">
-            <Icon className="w-5 h-5 text-gray-300 group-hover:text-white" />
-        </div>
-        <span className="text-xs text-gray-500">{label}</span>
-    </div>
-)
 
 export default About;

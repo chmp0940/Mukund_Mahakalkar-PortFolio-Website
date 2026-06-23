@@ -2,17 +2,16 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import ProjectDetails from "./components/ProjectDetails";
-
-import AuroraBackground from "./components/AuroraBackground";
+import TerminalBackground from "./components/TerminalBackground";
 
 function App() {
   return (
     <Router>
-        <AuroraBackground />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/project/:id" element={<ProjectDetails />} />
-        </Routes>
+      <TerminalBackground />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/project/:id" element={<ProjectDetails />} />
+      </Routes>
     </Router>
   );
 }

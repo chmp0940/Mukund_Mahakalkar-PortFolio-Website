@@ -1,16 +1,45 @@
 import React from "react";
-import { Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="py-8 text-center text-sm text-gray-500 relative">
-        <div className="flex flex-col items-center gap-2">
-            <p>&copy; {new Date().getFullYear()} Designed & Built with <Heart className="w-3 h-3 inline text-pink-500 fill-current" /> by Mukund</p>
-            <div className="flex gap-4 opacity-50">
-                <a href="https://github.com/chmp0940" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">GitHub</a>
-                <a href="https://www.linkedin.com/in/mukund-mahakalkar-789aa6289/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">LinkedIn</a>
-            </div>
+    <footer className="py-8 border-t border-terminal-border">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+          <div className="flex items-center gap-2">
+            <span className="text-terminal-green">❯</span>
+            <span>
+              &copy; {new Date().getFullYear()} Mukund Mahakalkar — Built with{" "}
+              <span className="text-red-400">&lt;3</span>
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1 text-slate-400">
+            <span className="text-terminal-green">[</span>
+            <span>Process exited with code</span>
+            <span className="text-terminal-green font-bold">0</span>
+            <span className="text-terminal-green">]</span>
+          </div>
+
+          <div className="flex gap-4">
+            <a
+              href="https://github.com/chmp0940"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-terminal-green transition-colors"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/mukund-mahakalkar-789aa6289/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-terminal-cyan transition-colors"
+            >
+              LinkedIn
+            </a>
+          </div>
         </div>
+      </div>
     </footer>
   );
 };

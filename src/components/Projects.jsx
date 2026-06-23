@@ -14,22 +14,25 @@ const featuredProjects = [
     title: "ShopEasy",
     category: "Full Stack E-Commerce",
     image: shopeasyImg,
-    description: "Next-gen shopping experience with AI recommendations.",
+    description: "B2C e-commerce platform with RBAC & PayPal payments.",
+    tech: ["React", "Node.js", "MongoDB", "Redux Toolkit", "PayPal API"],
   },
   {
     id: 2,
     title: "MicroMedia",
     category: "Backend Microservices",
     image: micromediaImg,
-    description: "Scalable backend architecture with Node.js and Docker.",
+    description: "Distributed social networking backend with Docker & CI/CD.",
+    tech: ["Node.js", "RabbitMQ", "Redis", "Docker"],
   },
   {
     id: 3,
     title: "NextJsAuth",
     category: "Secure Authentication",
     image: nextjsauthImg,
-    description: "Robust auth system with OAuth and session management.",
-  }
+    description: "Production-ready auth with JWT, bcrypt & Nodemailer.",
+    tech: ["Next.js 14", "TypeScript", "JWT", "Nodemailer"],
+  },
 ];
 
 const moreProjects = [
@@ -39,6 +42,7 @@ const moreProjects = [
     category: "Video Streaming API",
     image: vidtubeImg,
     description: "Robust backend system for video hosting and streaming.",
+    tech: ["Node.js", "Express", "Cloudinary"],
   },
   {
     id: 5,
@@ -46,38 +50,30 @@ const moreProjects = [
     category: "Q-Commerce Clone",
     image: zeptoImg,
     description: "High-performance Zepto clone with modern React patterns.",
-  }
+    tech: ["React", "Redux", "Tailwind"],
+  },
 ];
 
 const ProjectCard = ({ project }) => {
   const ref = useRef(null);
-
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
   const mouseXSpring = useSpring(x);
   const mouseYSpring = useSpring(y);
 
   const handleMouseMove = (e) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
+    x.set(mouseX / rect.width - 0.5);
+    y.set(mouseY / rect.height - 0.5);
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const handleMouseLeave = () => { x.set(0); y.set(0); };
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
 
   return (
     <Link to={`/project/${project.id}`}>
@@ -85,49 +81,67 @@ const ProjectCard = ({ project }) => {
         ref={ref}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        style={{
-          rotateY,
-          rotateX,
-          transformStyle: "preserve-3d",
-        }}
-        className="relative h-[400px] w-full rounded-3xl bg-white/5 border border-white/10 overflow-hidden group cursor-pointer shadow-xl backdrop-blur-sm"
+        style={{ rotateY, rotateX, transformStyle: "preserve-3d" }}
+        className="relative h-[380px] w-full rounded-lg overflow-hidden group cursor-pointer terminal-window"
       >
-        <div 
-           style={{
-             transform: "translateZ(50px)",
-             transformStyle: "preserve-3d",
-           }}
-           className="absolute inset-4 rounded-2xl overflow-hidden shadow-2xl"
+        {/* Terminal Title Bar */}
+        <div className="terminal-titlebar !py-2">
+          <div className="flex items-center gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+          </div>
+          <span className="text-[10px] text-slate-400 font-mono ml-2 truncate">
+            ~/{project.title.toLowerCase().replace(/\s+/g, "-")}
+          </span>
+        </div>
+
+        {/* Image */}
+        <div
+          style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}
+          className="absolute inset-0 top-[36px] overflow-hidden"
         >
           <img
             src={project.image}
             alt={project.title}
-            className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+            className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-700"
           />
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors" />
+          <div className="absolute inset-0 bg-terminal-bg/40 group-hover:bg-terminal-bg/60 transition-colors" />
         </div>
 
-        <div 
-           style={{ transform: "translateZ(80px)" }}
-           className="absolute bottom-10 left-10 z-20 pointer-events-none"
+        {/* Info Overlay */}
+        <div
+          style={{ transform: "translateZ(60px)" }}
+          className="absolute bottom-0 left-0 right-0 p-5 z-20"
         >
-           <div className="glass-card px-4 py-1 rounded-full text-xs font-bold text-white mb-2 w-fit">
-              {project.category}
-           </div>
-           <h3 className="text-3xl font-bold text-white mb-1 drop-shadow-lg">{project.title}</h3>
-           <p className="text-gray-200 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">
-               {project.description}
-           </p>
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            {project.tech.map((t) => (
+              <span key={t} className="text-[10px] px-2 py-0.5 bg-terminal-bg/80 backdrop-blur-sm border border-terminal-green/20 text-terminal-green rounded font-mono">
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="text-slate-400 text-[10px] font-mono mb-1">{project.category}</div>
+          <h3 className="text-xl font-bold text-terminal-text-primary font-sans mb-1 drop-shadow-lg">
+            {project.title}
+          </h3>
+          <p className="text-slate-300 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono">
+            {project.description}
+          </p>
         </div>
 
-        <div 
-          style={{ transform: "translateZ(100px)" }}
-          className="absolute top-10 right-10 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        {/* Arrow icon */}
+        <div
+          style={{ transform: "translateZ(80px)" }}
+          className="absolute top-14 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
-            <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center shadow-xl">
-                <ArrowUpRight className="w-6 h-6" />
-            </div>
+          <div className="w-9 h-9 rounded-md bg-terminal-green/20 border border-terminal-green/30 text-terminal-green flex items-center justify-center backdrop-blur-sm">
+            <ArrowUpRight className="w-4 h-4" />
+          </div>
         </div>
+
+        {/* Green glow border on hover */}
+        <div className="absolute inset-0 top-[36px] border border-transparent group-hover:border-terminal-green/20 transition-colors pointer-events-none z-30" />
       </motion.div>
     </Link>
   );
@@ -139,72 +153,74 @@ const Projects = () => {
   return (
     <section id="projects" className="py-24 relative">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-16 flex flex-col md:flex-row items-end justify-between gap-6">
+        <div className="mb-12 flex flex-col md:flex-row items-end justify-between gap-6">
           <div>
-            <h2 className="text-6xl font-bold mb-6">
-              Featured <br/>
-              <span className="text-gradient">Work</span>
+            <div className="section-comment">Projects</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 font-sans">
+              Featured <span className="glow-green">Work</span>
             </h2>
-             <p className="text-gray-400 max-w-lg">
-                Explore a selection of my most ambitious projects, ranging from AI-powered applications to scalable backend systems.
-             </p>
+            <p className="text-slate-300 max-w-lg text-sm font-mono">
+              <span className="text-slate-400">{">"} </span>
+              A selection of my most ambitious projects.
+            </p>
           </div>
-          
-          <div className="flex bg-white/5 p-1 rounded-full backdrop-blur-md border border-white/10">
-              <button 
-                  onClick={() => setActiveTab("featured")}
-                  className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${activeTab === "featured" ? "bg-purple-600 text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
-              >
-                  <Layers className="w-4 h-4" /> Featured
-              </button>
-              <button 
-                  onClick={() => setActiveTab("more")}
-                  className={`px-6 py-2 rounded-full text-sm font-semibold transition-all duration-300 flex items-center gap-2 ${activeTab === "more" ? "bg-purple-600 text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
-              >
-                  <LayoutGrid className="w-4 h-4" /> More Projects
-              </button>
+
+          <div className="flex bg-terminal-surface p-1 rounded-md border border-terminal-border">
+            <button
+              onClick={() => setActiveTab("featured")}
+              className={`px-4 py-2 rounded-md text-xs font-mono transition-all duration-300 flex items-center gap-2 ${
+                activeTab === "featured"
+                  ? "bg-terminal-green/10 text-terminal-green border border-terminal-green/20"
+                  : "text-slate-300 hover:text-terminal-text-primary"
+              }`}
+            >
+              <Layers className="w-3 h-3" /> Featured
+            </button>
+            <button
+              onClick={() => setActiveTab("more")}
+              className={`px-4 py-2 rounded-md text-xs font-mono transition-all duration-300 flex items-center gap-2 ${
+                activeTab === "more"
+                  ? "bg-terminal-green/10 text-terminal-green border border-terminal-green/20"
+                  : "text-slate-300 hover:text-terminal-text-primary"
+              }`}
+            >
+              <LayoutGrid className="w-3 h-3" /> More
+            </button>
           </div>
         </div>
 
         <AnimatePresence mode="wait">
-            <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000"
-            >
-                {activeTab === "featured" ? (
-                    featuredProjects.map((project, index) => (
-                        <motion.div
-                          key={project.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                            <ProjectCard project={project} />
-                        </motion.div>
-                    ))
-                ) : (
-                    moreProjects.map((project, index) => (
-                        <motion.div
-                          key={project.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1 }}
-                        >
-                            <ProjectCard project={project} />
-                        </motion.div>
-                    ))
-                )}
-            </motion.div>
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            style={{ perspective: "1000px" }}
+          >
+            {(activeTab === "featured" ? featuredProjects : moreProjects).map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
+          </motion.div>
         </AnimatePresence>
-        
-        <div className="mt-20 text-center">
-             <a href="https://github.com/chmp0940" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-                 <Github className="w-5 h-5" /> View all repositories
-             </a>
+
+        <div className="mt-16 text-center">
+          <a
+            href="https://github.com/chmp0940"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-slate-300 hover:text-terminal-green transition-colors font-mono text-sm"
+          >
+            <Github className="w-4 h-4" /> view all repositories →
+          </a>
         </div>
       </div>
     </section>
